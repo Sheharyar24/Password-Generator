@@ -10,6 +10,14 @@ class Password:
         t = random.choices(string.ascii_letters + string.digits + self.special, k=self.pass_len)
         return (''.join(t))
 
+def save_password(passwords):
+    with open("password.txt", "w") as file:
+        file.write("Generated Passwords\n")
+        
+        for i in range(len(passwords)):
+            file.write(f"{i+1}. {passwords[i]}\n")
+        print("Passwords saved to file!\n")
+
 ## CLI interface
 while True:
     print("=== Password Generator ===")
@@ -28,11 +36,21 @@ while True:
         
         num_of_pass = int(input("How many passwords would you like to generate: "))
         print("\nGenerated Password:\n")
+        generated_pass = []
+
         for i in range(1,num_of_pass+1):
             password = Password(password_length)
             password = password.create_pass()
+            generated_pass.append(password)
             print(f"{i}. {password}")
         print("")
-    if user_choice == "2":
+
+        save_choice = input("Do you want to save these passwords to a file? (y/n): ").lower()
+        if save_choice == 'y' or save_choice == 'yes':
+            save_password(generated_pass)
+
+    elif user_choice == "2":
         break
 
+    else:
+        print("Invalid option! (choose from 1 or 2)\n")
