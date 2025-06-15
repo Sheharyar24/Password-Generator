@@ -2,27 +2,45 @@ import string
 import random
 
 class Password:
+    """Create Password Class"""
     def __init__(self, pass_len):
         self.pass_len = pass_len
         self.special = '!@#$%^&*()_+-?'
 
     def create_pass(self):
+        """Creates Password"""
         t = random.choices(string.ascii_letters + string.digits + self.special, k=self.pass_len)
         return (''.join(t))
 
 def save_password(passwords):
+    """Save Password to file"""
     with open("password.txt", "w") as file:
         file.write("Generated Passwords\n")
-        
+
         for i in range(len(passwords)):
             file.write(f"{i+1}. {passwords[i]}\n")
         print("Passwords saved to file!\n")
+
+def view_history(passwords):
+    """Be able to view previously generated passwords"""
+    if not passwords:
+        print("No passwords have been generated yet.\n")
+        return
+
+    print("Previously Generated Passwords:")
+    print("===============================")
+    for i in range(len(passwords)):
+        print(f"{i+1}. {passwords[i]}")
+    print("")
+
+temp_pass = []
 
 ## CLI interface
 while True:
     print("=== Password Generator ===")
     print("1. Generate Password")
-    print("2. Exit")
+    print("2. View History")
+    print("3. Exit")
     print("==========================")
 
     user_choice = input("\nSelect option: ")
@@ -33,7 +51,7 @@ while True:
         if password_length < 4 or password_length > 128:
             print("Please enter a length between 4 and 128!\n")
             continue
-        
+
         num_of_pass = int(input("How many passwords would you like to generate: "))
         print("\nGenerated Password:\n")
         generated_pass = []
@@ -42,14 +60,19 @@ while True:
             password = Password(password_length)
             password = password.create_pass()
             generated_pass.append(password)
+            temp_pass.append(password)
             print(f"{i}. {password}")
         print("")
+
 
         save_choice = input("Do you want to save these passwords to a file? (y/n): ").lower()
         if save_choice == 'y' or save_choice == 'yes':
             save_password(generated_pass)
 
     elif user_choice == "2":
+        view_history(temp_pass)
+
+    elif user_choice == "3":
         break
 
     else:
