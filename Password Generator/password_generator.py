@@ -15,7 +15,7 @@ class Password:
         t = random.choices(string.ascii_letters + string.digits + self.special, k=self.pass_len)
         return (''.join(t))
     
-def generate_pass():
+def generate_pass(event=None):
     output.delete(0, tk.END)
 
     try:
@@ -35,7 +35,6 @@ def generate_pass():
                 password = password.create_pass()
                 generate_pass.append(password)
                 output.insert(tk.END, f"{i}. {password}")
-            entry1.delete(0, tk.END)
 
     except ValueError:
         messagebox.showinfo("Invalid Input", "Please enter a NUMBER between 4 and 128!")
@@ -77,6 +76,7 @@ lbl1 = tk.Label(frame, text="Password Length:")
 lbl1.grid(row=1, column=0, sticky="e", pady=5)
 
 entry1 = tk.Entry(frame)
+entry1.bind('<Return>', generate_pass)
 entry1.grid(row=1, column=1, sticky="ew", pady=5)
 
 lbl2 = tk.Label(frame, text="Passwords to Generate:")
