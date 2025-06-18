@@ -1,3 +1,6 @@
+import tkinter as tk
+from tkinter import filedialog as fd
+from tkinter import messagebox
 import string
 import random
 
@@ -11,69 +14,85 @@ class Password:
         """Creates Password"""
         t = random.choices(string.ascii_letters + string.digits + self.special, k=self.pass_len)
         return (''.join(t))
+    
+def generate_pass():
+    output.delete(0, tk.END)
 
-def save_password(passwords):
-    """Save Password to file"""
-    with open("password.txt", "w") as file:
-        file.write("Generated Passwords\n")
+    try:
+        pass_length = int(entry1.get())
+        number_of_pass = int(entry2.get())
 
-        for i in range(len(passwords)):
-            file.write(f"{i+1}. {passwords[i]}\n")
-        print("Passwords saved to file!\n")
+        if pass_length < 4 or pass_length > 128:
+            messagebox.showinfo("Invalid Input", "Please enter a length between 4 and 128!")
+            entry1.delete(0, tk.END)
+            entry2.delete(0, tk.END)
 
-def view_history(passwords):
-    """Be able to view previously generated passwords"""
-    if not passwords:
-        print("No passwords have been generated yet.\n")
-        return
+        else:
+            generate_pass = []
 
-    print("Previously Generated Passwords:")
-    print("===============================")
-    for i in range(len(passwords)):
-        print(f"{i+1}. {passwords[i]}")
-    print("")
+            for i in range(1,number_of_pass+1):
+                password = Password(pass_length)
+                password = password.create_pass()
+                generate_pass.append(password)
+                output.insert(tk.END, f"{i}. {password}")
+    except:
+        pass
 
-temp_pass = []
+def clear_box():
+    entry1.delete(0, tk.END)
+    entry2.delete(0, tk.END)
+    output.delete(0,tk.END)
 
-## CLI interface
-while True:
-    print("=== Password Generator ===")
-    print("1. Generate Password")
-    print("2. View History")
-    print("3. Exit")
-    print("==========================")
+def save_file():
+    file = fd.asksaveasfile(initialdir="C:/Users/sheha/Downloads",
+                            defaultextension=".txt", 
+                            filetypes=[("Text file",".txt"), ("All files", ".*")],
+                            mode="w")
+    paswd = output.get(0, tk.END)
+    for password in paswd:
+        file.write(password + '\n')
+    file.close()
 
-    user_choice = input("\nSelect option: ")
+root = tk.Tk()
+root.title("Password Generator")
+root.geometry("500x400")
 
-    if user_choice == "1":
-        password_length = int(input("\nEnter password length (min 4, max 128): "))
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
 
-        if password_length < 4 or password_length > 128:
-            print("Please enter a length between 4 and 128!\n")
-            continue
+frame = tk.Frame(root, padx=20, pady=20)
+frame.grid(sticky="nsew")
 
-        num_of_pass = int(input("How many passwords would you like to generate: "))
-        print("\nGenerated Password:\n")
-        generated_pass = []
+# Configure columns to stretch
+frame.columnconfigure(0, weight=1)
+frame.columnconfigure(1, weight=2)
+frame.columnconfigure(2, weight=1)
 
-        for i in range(1,num_of_pass+1):
-            password = Password(password_length)
-            password = password.create_pass()
-            generated_pass.append(password)
-            temp_pass.append(password)
-            print(f"{i}. {password}")
-        print("")
+header = tk.Label(frame, text="Password Generator", font=("Arial", 16, "bold"))
+header.grid(row=0, column=0, columnspan=3, pady=(0, 20))
 
+lbl1 = tk.Label(frame, text="Password Length:")
+lbl1.grid(row=1, column=0, sticky="e", pady=5)
 
-        save_choice = input("Do you want to save these passwords to a file? (y/n): ").lower()
-        if save_choice == 'y' or save_choice == 'yes':
-            save_password(generated_pass)
+entry1 = tk.Entry(frame)
+entry1.grid(row=1, column=1, sticky="ew", pady=5)
 
-    elif user_choice == "2":
-        view_history(temp_pass)
+lbl2 = tk.Label(frame, text="Passwords to Generate:")
+lbl2.grid(row=2, column=0, sticky="e", pady=5)
 
-    elif user_choice == "3":
-        break
+entry2 = tk.Entry(frame)
+entry2.grid(row=2, column=1, sticky="ew", pady=5)
 
-    else:
-        print("Invalid option! (choose from 1 or 2)\n")
+gen_btn = tk.Button(frame, text="Generate", command=generate_pass)
+gen_btn.grid(row=3, column=0, columnspan=2, pady=10, sticky="ew")
+
+clear_btn = tk.Button(frame, text="Clear", command=clear_box)
+clear_btn.grid(row=3, column=2, columnspan=2, pady=10, sticky="ew")
+
+output = tk.Listbox(frame)
+output.grid(row=4, column=0, columnspan=3, sticky="nsew", pady=10)
+
+save_btn = tk.Button(frame, text="Save", command=save_file)
+save_btn.grid(row=5, column=0, columnspan=3, sticky="nsew", pady=(0,20))
+
+tk.mainloop()
