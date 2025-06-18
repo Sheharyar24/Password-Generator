@@ -35,12 +35,14 @@ def generate_pass():
                 password = password.create_pass()
                 generate_pass.append(password)
                 output.insert(tk.END, f"{i}. {password}")
-    except:
-        pass
+            entry1.delete(0, tk.END)
+
+    except ValueError:
+        messagebox.showinfo("Invalid Input", "Please enter a NUMBER between 4 and 128!")
+        clear_box()
 
 def clear_box():
     entry1.delete(0, tk.END)
-    entry2.delete(0, tk.END)
     output.delete(0,tk.END)
 
 def save_file():
@@ -81,6 +83,7 @@ lbl2 = tk.Label(frame, text="Passwords to Generate:")
 lbl2.grid(row=2, column=0, sticky="e", pady=5)
 
 entry2 = tk.Entry(frame)
+entry2.insert(0,"1")
 entry2.grid(row=2, column=1, sticky="ew", pady=5)
 
 gen_btn = tk.Button(frame, text="Generate", command=generate_pass)
