@@ -1,78 +1,75 @@
 # Password Generator v2.0
 
-A Python command-line password generator that creates secure, random passwords with customizable length, session history tracking, and file export capabilities.
+A simple, user-friendly desktop application for generating secure passwords with customizable length and quantity options.
 
 ## Features
 
-- **Customizable Length**: Generate passwords between 4-128 characters
+- **Customizable Password Length**: Generate passwords between 4-128 characters
 - **Bulk Generation**: Create multiple passwords at once
-- **Session History**: View all passwords generated during the current session
-- **Secure Character Set**: Uses uppercase letters, lowercase letters, numbers, and special characters
-- **File Export**: Save generated passwords to a text file
+- **Save to File**: Export generated passwords to a text file
+- **Clean Interface**: Simple and intuitive GUI built with tkinter
+
+## Requirements
+
+- Python 3.x
+- tkinter (usually included with Python)
+
+## Installation
+
+1. Ensure Python 3.x is installed on your system
+2. Download the `password_generator.py` file
+3. Run the application:
+   ```bash
+   python password_generator.py
+   ```
+
+## Usage
+
+1. **Set Password Length**: Enter desired password length (4-128 characters)
+2. **Set Quantity**: Enter how many passwords you want to generate
+3. **Generate**: Click the "Generate" button to create passwords
+4. **View Results**: Generated passwords appear in the list below
+5. **Save (Optional)**: Click "Save" to export passwords to a text file
+6. **Clear**: Use the "Clear" button to reset all fields
 
 ## Character Set
 
-The password generator uses a comprehensive character set for maximum security:
-- **Uppercase Letters**: A-Z (26 characters)
-- **Lowercase Letters**: a-z (26 characters)  
-- **Numbers**: 0-9 (10 characters)
-- **Special Characters**: `!@#$%^&*()_+-?` (14 characters)
+Generated passwords include:
+- Uppercase letters (A-Z)
+- Lowercase letters (a-z)
+- Numbers (0-9)
+- Special characters (!@#$%^&*()_+-?)
 
-**Total Character Pool**: 76 unique characters
+## Version History
 
-## Example Session
+### v2.0
+- **Major Interface Upgrade**: Migrated from CLI to GUI using tkinter
+- Enhanced layout with improved grid system and responsive design
+- Better visual organization with column weights and proper spacing
+- Improved error handling and input validation with message boxes
+- Updated file save functionality with file dialog
+- Code refactoring for better maintainability
+- Streamlined user experience with buttons and visual feedback
 
-```
-=== Password Generator ===
-1. Generate Password
-2. View History
-3. Exit
-==========================
+### v1.0
+- Command-line interface (CLI) implementation
+- Core password generation functionality
+- Customizable password length and quantity
+- File saving capabilities
+- Password history viewing feature - allowed users to view previously generated passwords
+- Basic input validation and error handling
 
-Select option: 1
+## Technical Details
 
-Enter password length (min 4, max 128): 16
-How many passwords would you like to generate: 3
-
-Generated Password:
-
-1. Kx9@mP2$vQwE7nB#
-2. fR5!wEyTY3$zL9@k
-3. M4pLq8%xN6&jH2^s
-
-Do you want to save these passwords to a file? (y/n): y
-Passwords saved to file!
-
-=== Password Generator ===
-1. Generate Password
-2. View History
-3. Exit
-==========================
-
-Select option: 2
-
-Previously Generated Passwords:
-===============================
-1. Kx9@mP2$vQwE7nB#
-2. fR5!wEyTY3$zL9@k
-3. M4pLq8%xN6&jH2^s
-```
-
-## Future Enhancements
-
-Potential improvements for future versions:
-- Password strength scoring
-- Custom character set options
-- Encrypted file export
-- Persistent history with encryption
-- Password policy compliance checking
-- Multiple export formats (CSV, JSON)
-- Graphical User Interface
+- **Framework**: tkinter for GUI
+- **Password Generation**: Uses Python's `random.choices()` for cryptographically secure randomness
+- **Architecture**: Object-oriented design with Password class
+- **File I/O**: Built-in file dialog for save operations
 
 ## License
 
-This project is open source and available under the MIT License.
+This project is open source and available under standard usage terms.
 
-## Author
+## Support
 
-A simple yet powerful utility for generating secure passwords with session management capabilities.
+For issues or feature requests, please ensure you're using Python 3.x with tkinter support.
