@@ -1,4 +1,4 @@
-# Password Generator 
+# Password Generator v2.0
 
 A Python command-line password generator that creates secure, random passwords with customizable length, session history tracking, and file export capabilities.
 
